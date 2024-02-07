@@ -1,5 +1,5 @@
 ---
-title: 'The first post.'
+title: 'This is huge.'
 description: 'First blog post on nikkicoll.com'
 pubDate: 'Jan 03 2024'
 ---

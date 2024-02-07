@@ -2,13 +2,58 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+console.log(posts);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			ul {
+				list-style-type: none;
+				padding: unset;
+				display: block;
+			}
+			ul li * {
+				text-decoration: none;
+				transition: 0.2s ease;
+				text-align: center;
+			}
+			.recent-posts {
+				border: 0.1rem solid grey;
+				text-align: center;
+				margin-left: 10rem;
+				margin-right: 10rem;
+				margin-top: 0rem;
+				margin-bottom: 2rem;
+				padding: 0.5rem;
+			}
+			.title {
+				margin: 0;
+				display: inline-block;
+				color: rgb(var(--black));
+				line-height: 1;
+			}
+			.date {
+				margin: 0;
+				display: inline-block;
+				color: rgb(var(--gray));
+				font-style: italic;
+				padding-right: 0.25rem;
+			}
+			ul li a:hover .title {
+				color: rgb(var(--accent));
+				text-decoration: underline;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
@@ -24,6 +69,25 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				Welcome to my slice of the interweb, a cozy corner where tech musings mingle with hiking tales, kitchen experiments, and exploring what it means to be 'well'. Pull up a virtual chair, grab a (digital) cookie, and join the journey.
 			</p>
 		</main>
+		<div class="recent-posts">
+			<p style="font-weight: bold">Recent posts</p>
+			<section>
+				<ul>
+					{
+						posts.slice(0,3).map((post) => (
+							<li>
+								<div class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</div>
+								<a href={`/blog/${post.slug}/`}>
+									<div class="title">{post.data.title}</div>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</div>
 		<Footer />
 	</body>
 </html>
