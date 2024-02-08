@@ -4,4 +4,4 @@ description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jan 22 2024'
 ---
 
-second post.
+Coming soon :)

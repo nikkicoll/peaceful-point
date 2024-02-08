@@ -30,14 +30,12 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 				margin-bottom: 1em;
 				padding: 1em 0;
 				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
+				font-size: 0.5rem;
 			}
 			.date {
 				margin-bottom: 0.5em;
 				color: rgb(var(--gray));
+				font-size: 1rem;
 			}
 			.last-updated-on {
 				font-style: italic;
@@ -52,13 +50,7 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 				<div class="prose">
 					<div class="title">
 						<div class="date">
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+							{pubDate.toDateString().split(' ').slice(1).join(' ')}
 						</div>
 						<h1>{title}</h1>
 						<hr />
